@@ -1,3 +1,4 @@
+const chatbox = document.getElementById('chatbox');
 const messagesDiv = document.getElementById('messages');
 const userInput = document.getElementById('userInput');
 
@@ -23,15 +24,18 @@ function sendMessage() {
 
     appendMessage('You', userText);
 
-    // Get a random response
     const randomIndex = Math.floor(Math.random() * botResponses.length);
     const botReply = botResponses[randomIndex];
 
     setTimeout(() => {
         appendMessage('Bot', botReply);
-    }, 1000);  // Simulate some processing delay
+    }, 1000);
 
-    userInput.value = '';  // Clear the input field
+    userInput.value = '';
+}
+
+function toggleChatbot() {
+    chatbox.style.display = chatbox.style.display === 'none' ? 'flex' : 'none';
 }
 
 userInput.addEventListener('keydown', (event) => {
