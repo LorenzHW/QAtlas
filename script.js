@@ -35,7 +35,7 @@ function sendMessage() {
 }
 
 function toggleChatbot() {
-    chatbox.style.display = chatbox.style.display === 'none' ? 'flex' : 'none';
+    chatbox.style.display = chatbox.style.display !== 'flex' ? 'flex' : 'none';
 }
 
 userInput.addEventListener('keydown', (event) => {
