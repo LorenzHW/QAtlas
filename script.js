@@ -2,6 +2,9 @@ const chatbox = document.getElementById('chatbox');
 const messagesDiv = document.getElementById('messages');
 const userInput = document.getElementById('userInput');
 
+let systemMessageTimeout = undefined;
+let didSendSystemMessage = false;
+
 const botResponses = [
     "Hello! How can I help you?",
     "I'm not sure about that.",
@@ -14,7 +17,13 @@ const botResponses = [
 
 function appendMessage(who, text) {
     const messageDiv = document.createElement('div');
-    messageDiv.textContent = who + ': ' + text;
+    if (who === 'System') {
+        messageDiv.classList.add('system-message');
+        messageDiv.textContent = text;
+    } else {
+        messageDiv.textContent = who + ': ' + text;
+    }
+
     messagesDiv.appendChild(messageDiv);
 }
 
@@ -30,6 +39,14 @@ function sendMessage() {
     setTimeout(() => {
         appendMessage('Bot', botReply);
     }, 1000);
+
+    if (!didSendSystemMessage) {
+        clearTimeout(systemMessageTimeout);
+        systemMessageTimeout = setTimeout(() => {
+            appendMessage('System', 'Are you still there?');
+            didSendSystemMessage = true;
+        }, 10_000);
+    }
 
     userInput.value = '';
 }
